@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desenvolvimento de Sites — Planos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F4EF;
+    --paper-raised:#FFFFFF;
+    --ink:#152238;
+    --ink-soft:#4A5670;
+    --ink-faint:#8890A2;
+    --line:#DAD7CC;
+    --gold:#D89A2C;
+    --gold-deep:#A9700F;
+    --navy-deep:#0F1B30;
+    --green:#2F7A5C;
+    --green-deep:#245E47;
+    --radius:2px;
+    --wrap:1060px;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --paper:#12192A;
+      --paper-raised:#1A2338;
+      --ink:#EDEFF4;
+      --ink-soft:#B7BFD1;
+      --ink-faint:#7E8AA3;
+      --line:#2C3652;
+      --navy-deep:#080D18;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#12192A;
+    --paper-raised:#1A2338;
+    --ink:#EDEFF4;
+    --ink-soft:#B7BFD1;
+    --ink-faint:#7E8AA3;
+    --line:#2C3652;
+    --navy-deep:#080D18;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope', -apple-system, sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--gold); color:var(--navy-deep); }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{ max-width:var(--wrap); margin:0 auto; padding:0 28px; }
+
+  h1,h2,h3{
+    font-family:'Fraunces', Georgia, serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:96px 0 84px;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 42px 42px;
+    opacity:0.35;
+    mask-image: radial-gradient(ellipse 900px 420px at 15% 10%, black, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner{ position:relative; max-width:640px; }
+  .tag{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:16px;
+    color:var(--gold-deep);
+    margin-bottom:22px;
+    display:inline-block;
+  }
+  .hero h1{
+    font-size:clamp(32px, 4.4vw, 48px);
+    line-height:1.14;
+    margin-bottom:22px;
+  }
+  .hero p{
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:480px;
+    margin-bottom:36px;
+  }
+  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Manrope', sans-serif;
+    font-weight:700;
+    font-size:15px;
+    padding:14px 26px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:active{ transform:translateY(1px); }
+  .btn-primary{
+    background:var(--green);
+    color:#fff;
+  }
+  .btn-primary:hover{ background:var(--green-deep); }
+  .btn-ghost{
+    background:transparent;
+    border-color:var(--line);
+    color:var(--ink-soft);
+    font-weight:600;
+  }
+  .btn-ghost:hover{ border-color:var(--ink-faint); color:var(--ink); }
+
+  /* ---------- SECTION LABEL ---------- */
+  .section-head{
+    padding:64px 0 28px;
+    max-width:560px;
+  }
+  .section-head h2{
+    font-size:clamp(26px, 3vw, 32px);
+    margin-bottom:10px;
+  }
+  .section-head p{
+    color:var(--ink-soft);
+    font-size:15.5px;
+  }
+
+  /* ---------- PRICING ---------- */
+  .plans{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+    padding-bottom:20px;
+  }
+  .plan{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    padding:36px 32px 32px;
+    position:relative;
+  }
+  .plan::before{
+    content:"";
+    position:absolute;
+    top:14px; left:14px;
+    width:10px; height:10px;
+    border-top:1.5px solid var(--gold);
+    border-left:1.5px solid var(--gold);
+  }
+  .plan::after{
+    content:"";
+    position:absolute;
+    bottom:14px; right:14px;
+    width:10px; height:10px;
+    border-bottom:1.5px solid var(--gold);
+    border-right:1.5px solid var(--gold);
+  }
+  .plan-kicker{
+    font-size:13px;
+    color:var(--ink-faint);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .plan h3{
+    font-size:26px;
+    margin-bottom:14px;
+  }
+  .plan-price{
+    font-family:'Fraunces', serif;
+    font-size:34px;
+    color:var(--ink);
+    margin-bottom:4px;
+  }
+  .plan-price sup{ font-size:16px; top:-14px; position:relative; margin-right:2px; color:var(--ink-faint); font-family:'Manrope',sans-serif; }
+  .plan-note{
+    font-size:13.5px;
+    color:var(--ink-faint);
+    margin-bottom:20px;
+  }
+  .plan-desc{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    margin-bottom:24px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .plan-features{ list-style:none; }
+  .plan-features li{
+    display:flex;
+    gap:11px;
+    align-items:flex-start;
+    font-size:14.5px;
+    color:var(--ink);
+    padding:8px 0;
+  }
+  .plan-features svg{ flex:none; margin-top:3px; }
+  .plan-features .stroke{ stroke:var(--green); }
+
+  .plan-cta{
+    display:block;
+    text-align:center;
+    margin-top:26px;
+    padding:13px;
+    border:1px solid var(--ink);
+    font-weight:700;
+    font-size:14.5px;
+    text-decoration:none;
+    color:var(--ink);
+    transition:background .15s ease, color .15s ease;
+  }
+  .plan-cta:hover{ background:var(--ink); color:var(--paper-raised); }
+
+  /* ---------- MAINTENANCE ---------- */
+  .maint{
+    margin:20px 0 80px;
+    border:1px dashed var(--line);
+    padding:40px 36px;
+  }
+  .maint-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-bottom:28px;
+  }
+  .maint-top h2{ font-size:23px; margin-bottom:8px; }
+  .maint-top p{ color:var(--ink-soft); font-size:14.5px; max-width:420px; }
+  .maint-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .maint-item{
+    background:var(--paper-raised);
+    padding:24px 26px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:18px;
+  }
+  .maint-item-name{ font-weight:700; font-size:15px; }
+  .maint-item-desc{ font-size:13px; color:var(--ink-faint); margin-top:4px; }
+  .maint-item-price{
+    font-family:'Fraunces', serif;
+    font-size:21px;
+    white-space:nowrap;
+  }
+  .maint-item-price span{ font-size:12px; color:var(--ink-faint); font-family:'Manrope',sans-serif; }
+
+  /* ---------- CLOSING CTA ---------- */
+  .closing{
+    background:var(--navy-deep);
+    color:#F2F1EC;
+    padding:72px 0;
+  }
+  .closing-inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:32px;
+    flex-wrap:wrap;
+  }
+  .closing h2{
+    color:#F2F1EC;
+    font-size:clamp(24px, 3vw, 30px);
+    max-width:440px;
+  }
+  .closing p{
+    color:#A7AEC2;
+    font-size:14.5px;
+    margin-top:10px;
+    max-width:400px;
+  }
+
+  footer{
+    padding:26px 0 40px;
+    font-size:12.5px;
+    color:var(--ink-faint);
+    text-align:center;
+  }
+
+  @media (max-width:760px){
+    .hero{ padding:64px 0 56px; }
+    .plans{ grid-template-columns:1fr; }
+    .maint-grid{ grid-template-columns:1fr; }
+    .closing-inner{ flex-direction:column; align-items:flex-start; }
+    .maint{ padding:28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <span class="tag">Desenvolvimento de sites</span>
+        <h1>Um site bem feito vende antes mesmo de alguém falar com você.</h1>
+        <p>Enquanto o concorrente depende só de indicação, seu cliente já te encontrou, viu seu trabalho e decidiu confiar. É isso que um site profissional faz — sozinho, 24 horas por dia.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="https://wa.me/5547992337577" target="_blank" rel="noopener">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M17.6 6.3A8.9 8.9 0 0 0 4.2 17.4L3 21l3.7-1.2A8.9 8.9 0 1 0 17.6 6.3Z" stroke="white" stroke-width="1.6"/><path d="M8.7 8.6c.2-.5.4-.5.6-.5h.5c.2 0 .4 0 .5.4.2.5.6 1.5.7 1.6.1.1.1.3 0 .5-.1.2-.2.3-.3.4l-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.7c.2.1.3.1.4.3.1.2.1.9-.2 1.4s-1.4 1-2 1c-.5 0-1.9-.2-3.6-1.5-2.1-1.6-3.4-3.7-3.5-3.9-.1-.2-.9-1.2-.9-2.3 0-1.1.6-1.6.8-1.9Z" fill="white"/></svg>
+            Fazer meu site
+          </a>
+          <a class="btn btn-ghost" href="#planos">Ver os planos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div id="planos" class="section-head">
+      <h2>Dois formatos, um objetivo: seu negócio online.</h2>
+      <p>Escolha o modelo que combina com o momento da sua empresa — apresentar o trabalho ou vender produto direto pelo site.</p>
+    </div>
+
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-kicker">Presença profissional</div>
+        <h3>Institucional</h3>
+        <div class="plan-price"><sup>R$</sup>1.498,00</div>
+        <div class="plan-note">Pagamento único</div>
+        <p class="plan-desc">Para quem precisa marcar presença e passar confiança já no primeiro clique.</p>
+        <ul class="plan-features">
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path class="stroke" d="M3 8.5 6.5 12 13 4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>1 página completa</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path class="stroke" d="M3 8.5 6.5 12 13 4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Apresentação da empresa</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path class="stroke" d="M3 8.5 6.5 12 13 4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Vitrine de serviços</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path class="stroke" d="M3 8.5 6.5 12 13 4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Galeria de fotos</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path class="stroke" d="M3 8.5 6.5 12 13 4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Botão de WhatsApp integrado</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path class="stroke" d="M3 8.5 6.5 12 13 4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Localização</li>
+        </ul>
+        <a class="plan-cta" href="https://wa.me/5547992337577" target="_blank" rel="noopener">Quero este</a>
+      </div>
+
+      <div class="plan">
+        <div class="plan-kicker">Venda direta</div>
+        <h3>Catálogo</h3>
+        <div class="plan-price"><sup>R$</sup>1.987,00</div>
+        <div class="plan-note">Pagamento único</div>
+        <p class="plan-desc">Para quem vende produtos e quer que o cliente veja, filtre e escolha sozinho.</p>
+        <ul class="plan-features">
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path class="stroke" d="M3 8.5 6.5 12 13 4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>1 ou 2 páginas</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path class="stroke" d="M3 8.5 6.5 12 13 4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Catálogo completo de produtos</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path class="stroke" d="M3 8.5 6.5 12 13 4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Filtros por categoria</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path class="stroke" d="M3 8.5 6.5 12 13 4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Busca de produtos</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path class="stroke" d="M3 8.5 6.5 12 13 4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Estrutura para adicionar e remover produtos</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path class="stroke" d="M3 8.5 6.5 12 13 4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Opção de plano mensal para quem prefere não mexer</li>
+        </ul>
+        <a class="plan-cta" href="https://wa.me/5547992337577" target="_blank" rel="noopener">Quero este</a>
+      </div>
+    </div>
+
+    <div class="maint">
+      <div class="maint-top">
+        <div>
+          <h2>O site no ar é só o começo</h2>
+          <p>Preço, produto e texto mudam com o tempo. A manutenção mensal mantém tudo atualizado sem você precisar mexer em nada.</p>
+        </div>
+      </div>
+      <div class="maint-grid">
+        <div class="maint-item">
+          <div>
+            <div class="maint-item-name">Catálogo</div>
+            <div class="maint-item-desc">Monitoramento, textos, imagens e produtos (adicionar/remover)</div>
+          </div>
+          <div class="maint-item-price">R$ 500<span>/mês</span></div>
+        </div>
+        <div class="maint-item">
+          <div>
+            <div class="maint-item-name">Institucional</div>
+            <div class="maint-item-desc">Monitoramento, atualização de textos e imagens</div>
+          </div>
+          <div class="maint-item-price">R$ 200<span>/mês</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="closing">
+    <div class="wrap closing-inner">
+      <div>
+        <h2>Vamos colocar seu negócio no ar?</h2>
+        <p>Me chama no WhatsApp e eu te digo qual plano faz mais sentido pro seu momento.</p>
+      </div>
+      <a class="btn btn-primary" href="https://wa.me/5547992337577" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M17.6 6.3A8.9 8.9 0 0 0 4.2 17.4L3 21l3.7-1.2A8.9 8.9 0 1 0 17.6 6.3Z" stroke="white" stroke-width="1.6"/><path d="M8.7 8.6c.2-.5.4-.5.6-.5h.5c.2 0 .4 0 .5.4.2.5.6 1.5.7 1.6.1.1.1.3 0 .5-.1.2-.2.3-.3.4l-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.6-.7c.
+        Chamar no WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <footer>Valores válidos para escopo padrão descrito acima. Personalizações adicionais são orçadas à parte.</footer>
+
+</body>
+</html>
